@@ -1,26 +1,22 @@
-type Approval @entity {
+type Bonsai @entity {
   id: ID!
-  owner: Bytes! # address
-  approved: Bytes! # address
-  tokenId: BigInt! # uint256
+  tokenID: BigInt!
+  tokenURI: String!
+  holder: Holder!
+  name: String!
+  image: String!
+  animation_url: String!
+  Pot: String
+  Pet: String
+  Bark: String
+  Leaves: String
+  Fruit: String
+  NumberOfFruit: String
+  GroundCover: String
+  Background: String
 }
 
-type ApprovalForAll @entity {
+type Holder @entity {
   id: ID!
-  owner: Bytes! # address
-  operator: Bytes! # address
-  approved: Boolean! # bool
-}
-
-type OwnershipTransferred @entity {
-  id: ID!
-  previousOwner: Bytes! # address
-  newOwner: Bytes! # address
-}
-
-type Transfer @entity {
-  id: ID!
-  from: Bytes! # address
-  to: Bytes! # address
-  tokenId: BigInt! # uint256
+  Bonsai: [Bonsai!] @derivedFrom(field: "holder")
 }

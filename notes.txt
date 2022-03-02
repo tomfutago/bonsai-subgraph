@@ -1,0 +1,44 @@
+https://ipfs.io/ipfs/QmVtJUJrjWfthrGFvkwFciZcvoNLzCrC6EXAQwimYBUZeQ/1
+https://ipfs.io/ipfs/QmVtJUJrjWfthrGFvkwFciZcvoNLzCrC6EXAQwimYBUZeQ/8230
+https://ipfs.io/ipfs/QmVtJUJrjWfthrGFvkwFciZcvoNLzCrC6EXAQwimYBUZeQ/8888
+
+{
+    "image": "https://ipfs.io/ipfs/QmdE2S5BeP6Q7kUUUzCCZurZZDJCfKB2yTCxHJLBy8hn8A",
+    "animation_url": "https://ipfs.io/ipfs/QmWMgdnpCkUVVYUWyqZ3peZAiC3RTms5vaFeorxJozrxSq",
+    "name": "Bonsai #8230",
+    "attributes": [
+        {
+            "trait_type": "Pot",
+            "value": "Sunrise Clay"
+        },
+        {
+            "trait_type": "Pet",
+            "value": "None"
+        },
+        {
+            "trait_type": "Bark",
+            "value": "Birch"
+        },
+        {
+            "trait_type": "Leaves",
+            "value": "Fall Simple"
+        },
+        {
+            "trait_type": "Fruit",
+            "value": "None"
+        },
+        {
+            "trait_type": "Number of fruit",
+            "value": "0"
+        },
+        {
+            "trait_type": "Ground cover",
+            "value": "grass"
+        },
+        {
+            "trait_type": "Background",
+            "value": "day"
+        }
+    ],
+    "description": "[Image (.png)](https://ipfs.io/ipfs/QmdE2S5BeP6Q7kUUUzCCZurZZDJCfKB2yTCxHJLBy8hn8A)\n\n[Animation (.mp4)](https://ipfs.io/ipfs/QmWMgdnpCkUVVYUWyqZ3peZAiC3RTms5vaFeorxJozrxSq)\n\n[3D Model (.glb)](https://ipfs.io/ipfs/QmSpXmpbnEtYxYADGFwiiUqoeg478K5E48vwY5RKKJfpiC)\n\n[AR Object (.usdz)](https://ipfs.io/ipfs/QmWHiqHLzewMcPgQHvg16fdgiFgvnZpVcYYd6dX9V5LrXN)\n"
+}
