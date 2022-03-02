@@ -1,0 +1,22 @@
+type Bonsai @entity {
+  id: ID!
+  tokenID: BigInt!
+  tokenURI: String!
+  holder: Holder!
+  name: String!
+  image: String!
+  animation_url: String!
+  Pot: String
+  Pet: String
+  Bark: String
+  Leaves: String
+  Fruit: String
+  NumberOfFruit: String
+  GroundCover: String
+  Background: String
+}
+
+type Holder @entity {
+  id: ID!
+  Bonsai: [Bonsai!] @derivedFrom(field: "holder")
+}
