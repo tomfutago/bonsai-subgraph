@@ -1,22 +1,37 @@
+type _Schema_
+  @fulltext(
+    name: "bonsaiSearch"
+    language: en
+    algorithm: rank
+    include: [{
+      entity: "Bonsai",
+      fields: [
+        { name: "name" }, { name: "pot" }, { name: "pet" }, { name: "bark" }, { name: "leaves" },
+        { name: "fruit" }, { name: "numberOfFruit" }, { name: "groundCover" }, { name: "background" }
+      ]
+    }]
+  )
+
 type Bonsai @entity {
   id: ID!
   tokenID: BigInt!
   tokenURI: String!
-  holder: Holder!
-  name: String!
   image: String!
   animation_url: String!
-  Pot: String
-  Pet: String
-  Bark: String
-  Leaves: String
-  Fruit: String
-  NumberOfFruit: String
-  GroundCover: String
-  Background: String
+  name: String!
+  pot: String
+  pet: String
+  bark: String
+  leaves: String
+  fruit: String
+  numberOfFruit: String
+  groundCover: String
+  background: String
+  createdAtTimestamp: BigInt!
+  holder: Holder!
 }
 
 type Holder @entity {
   id: ID!
-  Bonsai: [Bonsai!] @derivedFrom(field: "holder")
+  bonsai: [Bonsai!] @derivedFrom(field: "holder")
 }

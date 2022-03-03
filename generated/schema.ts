@@ -18,10 +18,11 @@ export class Bonsai extends Entity {
 
     this.set("tokenID", Value.fromBigInt(BigInt.zero()));
     this.set("tokenURI", Value.fromString(""));
-    this.set("holder", Value.fromString(""));
-    this.set("name", Value.fromString(""));
     this.set("image", Value.fromString(""));
     this.set("animation_url", Value.fromString(""));
+    this.set("name", Value.fromString(""));
+    this.set("createdAtTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("holder", Value.fromString(""));
   }
 
   save(): void {
@@ -68,24 +69,6 @@ export class Bonsai extends Entity {
     this.set("tokenURI", Value.fromString(value));
   }
 
-  get holder(): string {
-    let value = this.get("holder");
-    return value!.toString();
-  }
-
-  set holder(value: string) {
-    this.set("holder", Value.fromString(value));
-  }
-
-  get name(): string {
-    let value = this.get("name");
-    return value!.toString();
-  }
-
-  set name(value: string) {
-    this.set("name", Value.fromString(value));
-  }
-
   get image(): string {
     let value = this.get("image");
     return value!.toString();
@@ -104,8 +87,17 @@ export class Bonsai extends Entity {
     this.set("animation_url", Value.fromString(value));
   }
 
-  get Pot(): string | null {
-    let value = this.get("Pot");
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get pot(): string | null {
+    let value = this.get("pot");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -113,16 +105,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Pot(value: string | null) {
+  set pot(value: string | null) {
     if (!value) {
-      this.unset("Pot");
+      this.unset("pot");
     } else {
-      this.set("Pot", Value.fromString(<string>value));
+      this.set("pot", Value.fromString(<string>value));
     }
   }
 
-  get Pet(): string | null {
-    let value = this.get("Pet");
+  get pet(): string | null {
+    let value = this.get("pet");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -130,16 +122,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Pet(value: string | null) {
+  set pet(value: string | null) {
     if (!value) {
-      this.unset("Pet");
+      this.unset("pet");
     } else {
-      this.set("Pet", Value.fromString(<string>value));
+      this.set("pet", Value.fromString(<string>value));
     }
   }
 
-  get Bark(): string | null {
-    let value = this.get("Bark");
+  get bark(): string | null {
+    let value = this.get("bark");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -147,16 +139,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Bark(value: string | null) {
+  set bark(value: string | null) {
     if (!value) {
-      this.unset("Bark");
+      this.unset("bark");
     } else {
-      this.set("Bark", Value.fromString(<string>value));
+      this.set("bark", Value.fromString(<string>value));
     }
   }
 
-  get Leaves(): string | null {
-    let value = this.get("Leaves");
+  get leaves(): string | null {
+    let value = this.get("leaves");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -164,16 +156,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Leaves(value: string | null) {
+  set leaves(value: string | null) {
     if (!value) {
-      this.unset("Leaves");
+      this.unset("leaves");
     } else {
-      this.set("Leaves", Value.fromString(<string>value));
+      this.set("leaves", Value.fromString(<string>value));
     }
   }
 
-  get Fruit(): string | null {
-    let value = this.get("Fruit");
+  get fruit(): string | null {
+    let value = this.get("fruit");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -181,16 +173,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Fruit(value: string | null) {
+  set fruit(value: string | null) {
     if (!value) {
-      this.unset("Fruit");
+      this.unset("fruit");
     } else {
-      this.set("Fruit", Value.fromString(<string>value));
+      this.set("fruit", Value.fromString(<string>value));
     }
   }
 
-  get NumberOfFruit(): string | null {
-    let value = this.get("NumberOfFruit");
+  get numberOfFruit(): string | null {
+    let value = this.get("numberOfFruit");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -198,16 +190,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set NumberOfFruit(value: string | null) {
+  set numberOfFruit(value: string | null) {
     if (!value) {
-      this.unset("NumberOfFruit");
+      this.unset("numberOfFruit");
     } else {
-      this.set("NumberOfFruit", Value.fromString(<string>value));
+      this.set("numberOfFruit", Value.fromString(<string>value));
     }
   }
 
-  get GroundCover(): string | null {
-    let value = this.get("GroundCover");
+  get groundCover(): string | null {
+    let value = this.get("groundCover");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -215,16 +207,16 @@ export class Bonsai extends Entity {
     }
   }
 
-  set GroundCover(value: string | null) {
+  set groundCover(value: string | null) {
     if (!value) {
-      this.unset("GroundCover");
+      this.unset("groundCover");
     } else {
-      this.set("GroundCover", Value.fromString(<string>value));
+      this.set("groundCover", Value.fromString(<string>value));
     }
   }
 
-  get Background(): string | null {
-    let value = this.get("Background");
+  get background(): string | null {
+    let value = this.get("background");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -232,12 +224,30 @@ export class Bonsai extends Entity {
     }
   }
 
-  set Background(value: string | null) {
+  set background(value: string | null) {
     if (!value) {
-      this.unset("Background");
+      this.unset("background");
     } else {
-      this.set("Background", Value.fromString(<string>value));
+      this.set("background", Value.fromString(<string>value));
     }
+  }
+
+  get createdAtTimestamp(): BigInt {
+    let value = this.get("createdAtTimestamp");
+    return value!.toBigInt();
+  }
+
+  set createdAtTimestamp(value: BigInt) {
+    this.set("createdAtTimestamp", Value.fromBigInt(value));
+  }
+
+  get holder(): string {
+    let value = this.get("holder");
+    return value!.toString();
+  }
+
+  set holder(value: string) {
+    this.set("holder", Value.fromString(value));
   }
 }
 
@@ -273,8 +283,8 @@ export class Holder extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get Bonsai(): Array<string> | null {
-    let value = this.get("Bonsai");
+  get bonsai(): Array<string> | null {
+    let value = this.get("bonsai");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -282,11 +292,11 @@ export class Holder extends Entity {
     }
   }
 
-  set Bonsai(value: Array<string> | null) {
+  set bonsai(value: Array<string> | null) {
     if (!value) {
-      this.unset("Bonsai");
+      this.unset("bonsai");
     } else {
-      this.set("Bonsai", Value.fromStringArray(<Array<string>>value));
+      this.set("bonsai", Value.fromStringArray(<Array<string>>value));
     }
   }
 }
