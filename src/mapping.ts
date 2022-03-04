@@ -92,10 +92,10 @@ export function handleTransfer(event: TransferEvent): void {
   }
 
   // check if previous holder has any other bonsai, if not - remove holder
-  let prevHolder = Holder.load(event.params.from.toHexString());
-  if (!prevHolder) return;
-  if (!prevHolder.bonsai) {
-    let id = prevHolder.id;
-    store.remove("Holder", id);
-  }
+  //let prevHolder = Holder.load(event.params.from.toHexString());
+  //if (!prevHolder) return;
+  //if (!prevHolder.bonsai) {
+  //  let id = prevHolder.id;
+  //  store.remove("Holder", id);
+  //}
 }
