@@ -12,8 +12,25 @@ type _Schema_
     }]
   )
 
+type Project @entity {
+  id: ID!
+  name: String!
+  symbol: String!
+  totalMinted: BigInt!
+  totalSales: BigInt!
+  totalTransfers: BigInt!
+}
+
+type Account @entity {
+  id: ID!
+  totalSales: BigInt!
+  totalTransfers: BigInt!
+  bonsai: [Bonsai!] @derivedFrom(field: "account")
+}
+
 type Bonsai @entity {
   id: ID!
+  project: Project!
   tokenID: BigInt!
   tokenURI: String!
   image: String!
@@ -28,10 +45,5 @@ type Bonsai @entity {
   groundCover: String
   background: String
   createdAtTimestamp: BigInt!
-  holder: Holder!
-}
-
-type Holder @entity {
-  id: ID!
-  bonsai: [Bonsai!] @derivedFrom(field: "holder")
+  account: Account!
 }

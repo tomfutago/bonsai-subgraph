@@ -11,18 +11,174 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Project extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("name", Value.fromString(""));
+    this.set("symbol", Value.fromString(""));
+    this.set("totalMinted", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSales", Value.fromBigInt(BigInt.zero()));
+    this.set("totalTransfers", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Project entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Project entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Project", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Project | null {
+    return changetype<Project | null>(store.get("Project", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get name(): string {
+    let value = this.get("name");
+    return value!.toString();
+  }
+
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
+  }
+
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value!.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
+  }
+
+  get totalMinted(): BigInt {
+    let value = this.get("totalMinted");
+    return value!.toBigInt();
+  }
+
+  set totalMinted(value: BigInt) {
+    this.set("totalMinted", Value.fromBigInt(value));
+  }
+
+  get totalSales(): BigInt {
+    let value = this.get("totalSales");
+    return value!.toBigInt();
+  }
+
+  set totalSales(value: BigInt) {
+    this.set("totalSales", Value.fromBigInt(value));
+  }
+
+  get totalTransfers(): BigInt {
+    let value = this.get("totalTransfers");
+    return value!.toBigInt();
+  }
+
+  set totalTransfers(value: BigInt) {
+    this.set("totalTransfers", Value.fromBigInt(value));
+  }
+}
+
+export class Account extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("totalSales", Value.fromBigInt(BigInt.zero()));
+    this.set("totalTransfers", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Account entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Account entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Account", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Account | null {
+    return changetype<Account | null>(store.get("Account", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get totalSales(): BigInt {
+    let value = this.get("totalSales");
+    return value!.toBigInt();
+  }
+
+  set totalSales(value: BigInt) {
+    this.set("totalSales", Value.fromBigInt(value));
+  }
+
+  get totalTransfers(): BigInt {
+    let value = this.get("totalTransfers");
+    return value!.toBigInt();
+  }
+
+  set totalTransfers(value: BigInt) {
+    this.set("totalTransfers", Value.fromBigInt(value));
+  }
+
+  get bonsai(): Array<string> | null {
+    let value = this.get("bonsai");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set bonsai(value: Array<string> | null) {
+    if (!value) {
+      this.unset("bonsai");
+    } else {
+      this.set("bonsai", Value.fromStringArray(<Array<string>>value));
+    }
+  }
+}
+
 export class Bonsai extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("project", Value.fromString(""));
     this.set("tokenID", Value.fromBigInt(BigInt.zero()));
     this.set("tokenURI", Value.fromString(""));
     this.set("image", Value.fromString(""));
     this.set("animation_url", Value.fromString(""));
     this.set("name", Value.fromString(""));
     this.set("createdAtTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("holder", Value.fromString(""));
+    this.set("account", Value.fromString(""));
   }
 
   save(): void {
@@ -49,6 +205,15 @@ export class Bonsai extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get project(): string {
+    let value = this.get("project");
+    return value!.toString();
+  }
+
+  set project(value: string) {
+    this.set("project", Value.fromString(value));
   }
 
   get tokenID(): BigInt {
@@ -241,62 +406,12 @@ export class Bonsai extends Entity {
     this.set("createdAtTimestamp", Value.fromBigInt(value));
   }
 
-  get holder(): string {
-    let value = this.get("holder");
+  get account(): string {
+    let value = this.get("account");
     return value!.toString();
   }
 
-  set holder(value: string) {
-    this.set("holder", Value.fromString(value));
-  }
-}
-
-export class Holder extends Entity {
-  constructor(id: string) {
-    super();
-    this.set("id", Value.fromString(id));
-  }
-
-  save(): void {
-    let id = this.get("id");
-    assert(id != null, "Cannot save Holder entity without an ID");
-    if (id) {
-      assert(
-        id.kind == ValueKind.STRING,
-        "Cannot save Holder entity with non-string ID. " +
-          'Considering using .toHex() to convert the "id" to a string.'
-      );
-      store.set("Holder", id.toString(), this);
-    }
-  }
-
-  static load(id: string): Holder | null {
-    return changetype<Holder | null>(store.get("Holder", id));
-  }
-
-  get id(): string {
-    let value = this.get("id");
-    return value!.toString();
-  }
-
-  set id(value: string) {
-    this.set("id", Value.fromString(value));
-  }
-
-  get bonsai(): Array<string> | null {
-    let value = this.get("bonsai");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toStringArray();
-    }
-  }
-
-  set bonsai(value: Array<string> | null) {
-    if (!value) {
-      this.unset("bonsai");
-    } else {
-      this.set("bonsai", Value.fromStringArray(<Array<string>>value));
-    }
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
   }
 }
