@@ -14,8 +14,9 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Bonsai 
-        - Holder
+        - Project
+        - Account
+        - Bonsai
       abis:
         - name: Token
           file: ./abis/Token.json
