@@ -19,18 +19,35 @@ type Project @entity {
   totalMinted: BigInt!
   totalSales: BigInt!
   totalTransfers: BigInt!
+  totalSalesWei: BigInt!
+  avgSaleWei: BigInt!
+  nfts: [Bonsai!]! @derivedFrom(field: "project")
+  sales: [SaleEvent!]! @derivedFrom(field: "project")
+  transfers: [TransferEvent!]! @derivedFrom(field: "project")
+  buyers: [Account!]!
+  sellers: [Account!]!
 }
 
 type Account @entity {
   id: ID!
   totalSales: BigInt!
   totalTransfers: BigInt!
-  bonsai: [Bonsai!] @derivedFrom(field: "account")
+  nft: [Bonsai!] @derivedFrom(field: "account")
+  bought: [SaleEvent!]! @derivedFrom(field: "from")
+  sold: [SaleEvent!]! @derivedFrom(field: "to")
+  sent: [TransferEvent!]! @derivedFrom(field: "from")
+  received: [TransferEvent!]! @derivedFrom(field: "to")
 }
 
 type Bonsai @entity {
   id: ID!
   project: Project!
+  account: Account!
+  sales: [SaleEvent!]! @derivedFrom(field: "nft")
+  transfers: [TransferEvent!]! @derivedFrom(field: "nft")
+  block: BigInt!
+  hash: Bytes!
+  timestamp: BigInt!
   tokenID: BigInt!
   tokenURI: String!
   image: String!
@@ -44,6 +61,31 @@ type Bonsai @entity {
   numberOfFruit: String
   groundCover: String
   background: String
-  createdAtTimestamp: BigInt!
-  account: Account!
+}
+
+type TransferEvent @entity {
+  id: ID!
+  idx: BigInt!
+  project: Project!
+  nft: Bonsai!
+  from: Account!
+  to: Account!
+  block: BigInt!
+  hash: Bytes!
+  timestamp: BigInt!
+  isMint: Boolean
+}
+
+type SaleEvent @entity {
+  id: ID!
+  idx: BigInt!
+  project: Project!
+  nft: Bonsai!
+  amount: BigInt!
+  metadata: String
+  from: Account!
+  to: Account!
+  block: BigInt!
+  hash: Bytes!
+  timestamp: BigInt!
 }

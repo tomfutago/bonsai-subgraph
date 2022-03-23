@@ -4,6 +4,7 @@ import { Project, Account, Bonsai } from "../../generated/schema";
 import { ipfs, json, JSONValue } from '@graphprotocol/graph-ts';
 import { ZERO, IPFS_HASH } from "../utils/constants";
 
+/***** Project functions *****/
 export function getProject(contractAddress: Address): Project {
   let project = Project.load(contractAddress.toHexString());
   if (!project) {
@@ -14,11 +15,37 @@ export function getProject(contractAddress: Address): Project {
     project.totalMinted = ZERO;
     project.totalSales = ZERO;
     project.totalTransfers = ZERO;
+    project.totalSalesWei = ZERO;
+    project.avgSaleWei = ZERO;
+    project.buyers = [];
+    project.sellers = [];
     project.save();
   }
   return project as Project;
 }
 
+// appends a buyer to project.buyers array if it doesn't exist
+export function addBuyer(project: Project, buyer: Account): void {
+  let buyers = project.buyers;
+  if (!buyers.includes(buyer.id)) {
+    buyers.push(buyer.id);
+    project.buyers = buyers;
+  }
+  project.save();
+}
+
+// appends a seller to project.sellers array if it doesn't exist
+export function addSeller(project: Project, seller: Account): void {
+  let sellers = project.buyers;
+  if (!sellers.includes(seller.id)) {
+    sellers.push(seller.id);
+    project.sellers = sellers;
+  }
+  project.save();
+}
+
+
+/***** Account functions *****/
 export function getAccount(walletAddress: Address): Account {
   let account = Account.load(walletAddress.toHexString());
   if (!account) {
@@ -31,6 +58,7 @@ export function getAccount(walletAddress: Address): Account {
   return account as Account;
 }
 
+/***** NFT functions *****/
 export function getBonsai(
   id: string,
   contractAddress: Address,
@@ -43,7 +71,7 @@ export function getBonsai(
     bonsai = new Bonsai(id);
     bonsai.project = contractAddress.toHexString();
     bonsai.tokenID = tokenID;
-    bonsai.createdAtTimestamp = timestamp;
+    bonsai.timestamp = timestamp;
     bonsai.tokenURI = IPFS_HASH + "/" + tokenID.toString();
   
     let metadata = ipfs.cat(bonsai.tokenURI);

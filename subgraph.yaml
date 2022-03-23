@@ -17,6 +17,8 @@ dataSources:
         - Project
         - Account
         - Bonsai
+        - TransferEvent
+        - SaleEvent
       abis:
         - name: Token
           file: ./abis/Token.json
