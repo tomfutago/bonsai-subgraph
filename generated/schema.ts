@@ -21,6 +21,10 @@ export class Project extends Entity {
     this.set("totalMinted", Value.fromBigInt(BigInt.zero()));
     this.set("totalSales", Value.fromBigInt(BigInt.zero()));
     this.set("totalTransfers", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSalesWei", Value.fromBigInt(BigInt.zero()));
+    this.set("avgSaleWei", Value.fromBigInt(BigInt.zero()));
+    this.set("buyers", Value.fromStringArray(new Array(0)));
+    this.set("sellers", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -93,6 +97,69 @@ export class Project extends Entity {
   set totalTransfers(value: BigInt) {
     this.set("totalTransfers", Value.fromBigInt(value));
   }
+
+  get totalSalesWei(): BigInt {
+    let value = this.get("totalSalesWei");
+    return value!.toBigInt();
+  }
+
+  set totalSalesWei(value: BigInt) {
+    this.set("totalSalesWei", Value.fromBigInt(value));
+  }
+
+  get avgSaleWei(): BigInt {
+    let value = this.get("avgSaleWei");
+    return value!.toBigInt();
+  }
+
+  set avgSaleWei(value: BigInt) {
+    this.set("avgSaleWei", Value.fromBigInt(value));
+  }
+
+  get nfts(): Array<string> {
+    let value = this.get("nfts");
+    return value!.toStringArray();
+  }
+
+  set nfts(value: Array<string>) {
+    this.set("nfts", Value.fromStringArray(value));
+  }
+
+  get sales(): Array<string> {
+    let value = this.get("sales");
+    return value!.toStringArray();
+  }
+
+  set sales(value: Array<string>) {
+    this.set("sales", Value.fromStringArray(value));
+  }
+
+  get transfers(): Array<string> {
+    let value = this.get("transfers");
+    return value!.toStringArray();
+  }
+
+  set transfers(value: Array<string>) {
+    this.set("transfers", Value.fromStringArray(value));
+  }
+
+  get buyers(): Array<string> {
+    let value = this.get("buyers");
+    return value!.toStringArray();
+  }
+
+  set buyers(value: Array<string>) {
+    this.set("buyers", Value.fromStringArray(value));
+  }
+
+  get sellers(): Array<string> {
+    let value = this.get("sellers");
+    return value!.toStringArray();
+  }
+
+  set sellers(value: Array<string>) {
+    this.set("sellers", Value.fromStringArray(value));
+  }
 }
 
 export class Account extends Entity {
@@ -100,8 +167,14 @@ export class Account extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("totalSales", Value.fromBigInt(BigInt.zero()));
-    this.set("totalTransfers", Value.fromBigInt(BigInt.zero()));
+    this.set("totalBought", Value.fromBigInt(BigInt.zero()));
+    this.set("totalBoughtWei", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSold", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSoldWei", Value.fromBigInt(BigInt.zero()));
+    this.set("avgBoughtWei", Value.fromBigInt(BigInt.zero()));
+    this.set("avgSoldWei", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSent", Value.fromBigInt(BigInt.zero()));
+    this.set("totalReceived", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -130,26 +203,80 @@ export class Account extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get totalSales(): BigInt {
-    let value = this.get("totalSales");
+  get totalBought(): BigInt {
+    let value = this.get("totalBought");
     return value!.toBigInt();
   }
 
-  set totalSales(value: BigInt) {
-    this.set("totalSales", Value.fromBigInt(value));
+  set totalBought(value: BigInt) {
+    this.set("totalBought", Value.fromBigInt(value));
   }
 
-  get totalTransfers(): BigInt {
-    let value = this.get("totalTransfers");
+  get totalBoughtWei(): BigInt {
+    let value = this.get("totalBoughtWei");
     return value!.toBigInt();
   }
 
-  set totalTransfers(value: BigInt) {
-    this.set("totalTransfers", Value.fromBigInt(value));
+  set totalBoughtWei(value: BigInt) {
+    this.set("totalBoughtWei", Value.fromBigInt(value));
   }
 
-  get bonsai(): Array<string> | null {
-    let value = this.get("bonsai");
+  get totalSold(): BigInt {
+    let value = this.get("totalSold");
+    return value!.toBigInt();
+  }
+
+  set totalSold(value: BigInt) {
+    this.set("totalSold", Value.fromBigInt(value));
+  }
+
+  get totalSoldWei(): BigInt {
+    let value = this.get("totalSoldWei");
+    return value!.toBigInt();
+  }
+
+  set totalSoldWei(value: BigInt) {
+    this.set("totalSoldWei", Value.fromBigInt(value));
+  }
+
+  get avgBoughtWei(): BigInt {
+    let value = this.get("avgBoughtWei");
+    return value!.toBigInt();
+  }
+
+  set avgBoughtWei(value: BigInt) {
+    this.set("avgBoughtWei", Value.fromBigInt(value));
+  }
+
+  get avgSoldWei(): BigInt {
+    let value = this.get("avgSoldWei");
+    return value!.toBigInt();
+  }
+
+  set avgSoldWei(value: BigInt) {
+    this.set("avgSoldWei", Value.fromBigInt(value));
+  }
+
+  get totalSent(): BigInt {
+    let value = this.get("totalSent");
+    return value!.toBigInt();
+  }
+
+  set totalSent(value: BigInt) {
+    this.set("totalSent", Value.fromBigInt(value));
+  }
+
+  get totalReceived(): BigInt {
+    let value = this.get("totalReceived");
+    return value!.toBigInt();
+  }
+
+  set totalReceived(value: BigInt) {
+    this.set("totalReceived", Value.fromBigInt(value));
+  }
+
+  get nft(): Array<string> | null {
+    let value = this.get("nft");
     if (!value || value.kind == ValueKind.NULL) {
       return null;
     } else {
@@ -157,12 +284,48 @@ export class Account extends Entity {
     }
   }
 
-  set bonsai(value: Array<string> | null) {
+  set nft(value: Array<string> | null) {
     if (!value) {
-      this.unset("bonsai");
+      this.unset("nft");
     } else {
-      this.set("bonsai", Value.fromStringArray(<Array<string>>value));
+      this.set("nft", Value.fromStringArray(<Array<string>>value));
     }
+  }
+
+  get bought(): Array<string> {
+    let value = this.get("bought");
+    return value!.toStringArray();
+  }
+
+  set bought(value: Array<string>) {
+    this.set("bought", Value.fromStringArray(value));
+  }
+
+  get sold(): Array<string> {
+    let value = this.get("sold");
+    return value!.toStringArray();
+  }
+
+  set sold(value: Array<string>) {
+    this.set("sold", Value.fromStringArray(value));
+  }
+
+  get sent(): Array<string> {
+    let value = this.get("sent");
+    return value!.toStringArray();
+  }
+
+  set sent(value: Array<string>) {
+    this.set("sent", Value.fromStringArray(value));
+  }
+
+  get received(): Array<string> {
+    let value = this.get("received");
+    return value!.toStringArray();
+  }
+
+  set received(value: Array<string>) {
+    this.set("received", Value.fromStringArray(value));
   }
 }
 
@@ -172,13 +335,19 @@ export class Bonsai extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("project", Value.fromString(""));
+    this.set("account", Value.fromString(""));
+    this.set("totalSales", Value.fromBigInt(BigInt.zero()));
+    this.set("totalSalesWei", Value.fromBigInt(BigInt.zero()));
+    this.set("avgSaleWei", Value.fromBigInt(BigInt.zero()));
+    this.set("totalTransfers", Value.fromBigInt(BigInt.zero()));
+    this.set("block", Value.fromBigInt(BigInt.zero()));
+    this.set("hash", Value.fromBytes(Bytes.empty()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
     this.set("tokenID", Value.fromBigInt(BigInt.zero()));
     this.set("tokenURI", Value.fromString(""));
     this.set("image", Value.fromString(""));
     this.set("animation_url", Value.fromString(""));
     this.set("name", Value.fromString(""));
-    this.set("createdAtTimestamp", Value.fromBigInt(BigInt.zero()));
-    this.set("account", Value.fromString(""));
   }
 
   save(): void {
@@ -214,6 +383,113 @@ export class Bonsai extends Entity {
 
   set project(value: string) {
     this.set("project", Value.fromString(value));
+  }
+
+  get account(): string {
+    let value = this.get("account");
+    return value!.toString();
+  }
+
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
+  }
+
+  get metadata(): string | null {
+    let value = this.get("metadata");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set metadata(value: string | null) {
+    if (!value) {
+      this.unset("metadata");
+    } else {
+      this.set("metadata", Value.fromString(<string>value));
+    }
+  }
+
+  get totalSales(): BigInt {
+    let value = this.get("totalSales");
+    return value!.toBigInt();
+  }
+
+  set totalSales(value: BigInt) {
+    this.set("totalSales", Value.fromBigInt(value));
+  }
+
+  get totalSalesWei(): BigInt {
+    let value = this.get("totalSalesWei");
+    return value!.toBigInt();
+  }
+
+  set totalSalesWei(value: BigInt) {
+    this.set("totalSalesWei", Value.fromBigInt(value));
+  }
+
+  get avgSaleWei(): BigInt {
+    let value = this.get("avgSaleWei");
+    return value!.toBigInt();
+  }
+
+  set avgSaleWei(value: BigInt) {
+    this.set("avgSaleWei", Value.fromBigInt(value));
+  }
+
+  get totalTransfers(): BigInt {
+    let value = this.get("totalTransfers");
+    return value!.toBigInt();
+  }
+
+  set totalTransfers(value: BigInt) {
+    this.set("totalTransfers", Value.fromBigInt(value));
+  }
+
+  get sales(): Array<string> {
+    let value = this.get("sales");
+    return value!.toStringArray();
+  }
+
+  set sales(value: Array<string>) {
+    this.set("sales", Value.fromStringArray(value));
+  }
+
+  get transfers(): Array<string> {
+    let value = this.get("transfers");
+    return value!.toStringArray();
+  }
+
+  set transfers(value: Array<string>) {
+    this.set("transfers", Value.fromStringArray(value));
+  }
+
+  get block(): BigInt {
+    let value = this.get("block");
+    return value!.toBigInt();
+  }
+
+  set block(value: BigInt) {
+    this.set("block", Value.fromBigInt(value));
+  }
+
+  get hash(): Bytes {
+    let value = this.get("hash");
+    return value!.toBytes();
+  }
+
+  set hash(value: Bytes) {
+    this.set("hash", Value.fromBytes(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 
   get tokenID(): BigInt {
@@ -396,22 +672,268 @@ export class Bonsai extends Entity {
       this.set("background", Value.fromString(<string>value));
     }
   }
+}
 
-  get createdAtTimestamp(): BigInt {
-    let value = this.get("createdAtTimestamp");
-    return value!.toBigInt();
+export class TransferEvent extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("idx", Value.fromBigInt(BigInt.zero()));
+    this.set("project", Value.fromString(""));
+    this.set("nft", Value.fromString(""));
+    this.set("from", Value.fromString(""));
+    this.set("to", Value.fromString(""));
+    this.set("block", Value.fromBigInt(BigInt.zero()));
+    this.set("hash", Value.fromBytes(Bytes.empty()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
 
-  set createdAtTimestamp(value: BigInt) {
-    this.set("createdAtTimestamp", Value.fromBigInt(value));
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save TransferEvent entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save TransferEvent entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("TransferEvent", id.toString(), this);
+    }
   }
 
-  get account(): string {
-    let value = this.get("account");
+  static load(id: string): TransferEvent | null {
+    return changetype<TransferEvent | null>(store.get("TransferEvent", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
     return value!.toString();
   }
 
-  set account(value: string) {
-    this.set("account", Value.fromString(value));
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get idx(): BigInt {
+    let value = this.get("idx");
+    return value!.toBigInt();
+  }
+
+  set idx(value: BigInt) {
+    this.set("idx", Value.fromBigInt(value));
+  }
+
+  get project(): string {
+    let value = this.get("project");
+    return value!.toString();
+  }
+
+  set project(value: string) {
+    this.set("project", Value.fromString(value));
+  }
+
+  get nft(): string {
+    let value = this.get("nft");
+    return value!.toString();
+  }
+
+  set nft(value: string) {
+    this.set("nft", Value.fromString(value));
+  }
+
+  get from(): string {
+    let value = this.get("from");
+    return value!.toString();
+  }
+
+  set from(value: string) {
+    this.set("from", Value.fromString(value));
+  }
+
+  get to(): string {
+    let value = this.get("to");
+    return value!.toString();
+  }
+
+  set to(value: string) {
+    this.set("to", Value.fromString(value));
+  }
+
+  get block(): BigInt {
+    let value = this.get("block");
+    return value!.toBigInt();
+  }
+
+  set block(value: BigInt) {
+    this.set("block", Value.fromBigInt(value));
+  }
+
+  get hash(): Bytes {
+    let value = this.get("hash");
+    return value!.toBytes();
+  }
+
+  set hash(value: Bytes) {
+    this.set("hash", Value.fromBytes(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get isMint(): boolean {
+    let value = this.get("isMint");
+    return value!.toBoolean();
+  }
+
+  set isMint(value: boolean) {
+    this.set("isMint", Value.fromBoolean(value));
+  }
+}
+
+export class SaleEvent extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("idx", Value.fromBigInt(BigInt.zero()));
+    this.set("project", Value.fromString(""));
+    this.set("nft", Value.fromString(""));
+    this.set("amount", Value.fromBigInt(BigInt.zero()));
+    this.set("from", Value.fromString(""));
+    this.set("to", Value.fromString(""));
+    this.set("block", Value.fromBigInt(BigInt.zero()));
+    this.set("hash", Value.fromBytes(Bytes.empty()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save SaleEvent entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save SaleEvent entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("SaleEvent", id.toString(), this);
+    }
+  }
+
+  static load(id: string): SaleEvent | null {
+    return changetype<SaleEvent | null>(store.get("SaleEvent", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get idx(): BigInt {
+    let value = this.get("idx");
+    return value!.toBigInt();
+  }
+
+  set idx(value: BigInt) {
+    this.set("idx", Value.fromBigInt(value));
+  }
+
+  get project(): string {
+    let value = this.get("project");
+    return value!.toString();
+  }
+
+  set project(value: string) {
+    this.set("project", Value.fromString(value));
+  }
+
+  get nft(): string {
+    let value = this.get("nft");
+    return value!.toString();
+  }
+
+  set nft(value: string) {
+    this.set("nft", Value.fromString(value));
+  }
+
+  get amount(): BigInt {
+    let value = this.get("amount");
+    return value!.toBigInt();
+  }
+
+  set amount(value: BigInt) {
+    this.set("amount", Value.fromBigInt(value));
+  }
+
+  get metadata(): string | null {
+    let value = this.get("metadata");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
+  }
+
+  set metadata(value: string | null) {
+    if (!value) {
+      this.unset("metadata");
+    } else {
+      this.set("metadata", Value.fromString(<string>value));
+    }
+  }
+
+  get from(): string {
+    let value = this.get("from");
+    return value!.toString();
+  }
+
+  set from(value: string) {
+    this.set("from", Value.fromString(value));
+  }
+
+  get to(): string {
+    let value = this.get("to");
+    return value!.toString();
+  }
+
+  set to(value: string) {
+    this.set("to", Value.fromString(value));
+  }
+
+  get block(): BigInt {
+    let value = this.get("block");
+    return value!.toBigInt();
+  }
+
+  set block(value: BigInt) {
+    this.set("block", Value.fromBigInt(value));
+  }
+
+  get hash(): Bytes {
+    let value = this.get("hash");
+    return value!.toBytes();
+  }
+
+  set hash(value: Bytes) {
+    this.set("hash", Value.fromBytes(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }

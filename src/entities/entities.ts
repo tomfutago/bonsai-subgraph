@@ -4,6 +4,7 @@ import { Project, Account, Bonsai } from "../../generated/schema";
 import { ipfs, json, JSONValue } from '@graphprotocol/graph-ts';
 import { ZERO, IPFS_HASH } from "../utils/constants";
 
+
 /***** Project functions *****/
 export function getProject(contractAddress: Address): Project {
   let project = Project.load(contractAddress.toHexString());
@@ -50,13 +51,19 @@ export function getAccount(walletAddress: Address): Account {
   let account = Account.load(walletAddress.toHexString());
   if (!account) {
     account = new Account(walletAddress.toHexString());
-    account.totalSales = ZERO;
-    account.totalTransfers = ZERO;
+    account.totalBought = ZERO;
+    account.totalBoughtWei = ZERO;
+    account.avgBoughtWei = ZERO;
+    account.totalSold = ZERO;
+    account.totalSoldWei = ZERO;
+    account.avgSoldWei = ZERO;
+    account.totalSent = ZERO;
+    account.totalReceived = ZERO;
+    account.save();
   }
-  account.save();
-
   return account as Account;
 }
+
 
 /***** NFT functions *****/
 export function getBonsai(
@@ -138,9 +145,8 @@ export function getBonsai(
         }
       }
     }
+    bonsai.account = walletAddress.toHexString();
+    bonsai.save();
   }
-  bonsai.account = walletAddress.toHexString();
-  bonsai.save();
-
   return bonsai as Bonsai;
 }
