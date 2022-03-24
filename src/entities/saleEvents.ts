@@ -10,8 +10,7 @@ export function create(
   amount: BigInt,
   block: BigInt,
   hash: Bytes,
-  timestamp: BigInt,
-  metadata: string = "{}"
+  timestamp: BigInt
 ): void {
   // new sales event
   let saleId = nft.id
@@ -29,7 +28,6 @@ export function create(
   sale.block = block;
   sale.hash = hash;
   sale.timestamp = timestamp;
-  sale.metadata = metadata;
 
   // increment the sales counts
   project.totalSales = project.totalSales.plus(ONE);
@@ -37,19 +35,19 @@ export function create(
   from.totalBought = from.totalBought.plus(ONE);
   to.totalSold = to.totalSold.plus(ONE);
 
-  /* Increment the sales amounts */
+  // increment the sales amounts
   project.totalSalesWei = project.totalSalesWei.plus(sale.amount);
   nft.totalSalesWei = nft.totalSalesWei.plus(sale.amount);
   from.totalBoughtWei = from.totalBoughtWei.plus(sale.amount);
   to.totalSoldWei = to.totalSoldWei.plus(sale.amount);
 
-  /* Calculate average sale prices */
+  // calculate average sale prices
   project.avgSaleWei = project.totalSalesWei.div(project.totalSales);
   nft.avgSaleWei = nft.totalSalesWei.div(nft.totalSales);
   from.avgBoughtWei = from.totalBoughtWei.div(from.totalBought);
   to.avgSoldWei = to.totalSoldWei.div(to.totalSold);
 
-  /* Graph mutation */
+  // graph mutation
   project.save();
   from.save();
   to.save();

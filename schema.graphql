@@ -49,7 +49,6 @@ type Bonsai @entity {
   id: ID!
   project: Project!
   account: Account!
-  metadata: String
   totalSales: BigInt!
   totalSalesWei: BigInt!
   avgSaleWei: BigInt!
@@ -93,7 +92,6 @@ type SaleEvent @entity {
   project: Project!
   nft: Bonsai!
   amount: BigInt!
-  metadata: String
   from: Account!
   to: Account!
   block: BigInt!

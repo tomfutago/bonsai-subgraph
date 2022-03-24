@@ -394,23 +394,6 @@ export class Bonsai extends Entity {
     this.set("account", Value.fromString(value));
   }
 
-  get metadata(): string | null {
-    let value = this.get("metadata");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set metadata(value: string | null) {
-    if (!value) {
-      this.unset("metadata");
-    } else {
-      this.set("metadata", Value.fromString(<string>value));
-    }
-  }
-
   get totalSales(): BigInt {
     let value = this.get("totalSales");
     return value!.toBigInt();
@@ -873,23 +856,6 @@ export class SaleEvent extends Entity {
 
   set amount(value: BigInt) {
     this.set("amount", Value.fromBigInt(value));
-  }
-
-  get metadata(): string | null {
-    let value = this.get("metadata");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
-  }
-
-  set metadata(value: string | null) {
-    if (!value) {
-      this.unset("metadata");
-    } else {
-      this.set("metadata", Value.fromString(<string>value));
-    }
   }
 
   get from(): string {

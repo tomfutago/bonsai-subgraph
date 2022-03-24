@@ -1,75 +1,15 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
-import { Token as TokenContract } from "../../generated/Token/Token";
-import { Project, Account, Bonsai } from "../../generated/schema";
+import { Address, BigInt, Bytes } from "@graphprotocol/graph-ts";
+import { Bonsai } from "../../generated/schema";
 import { ipfs, json, JSONValue } from '@graphprotocol/graph-ts';
 import { ZERO, IPFS_HASH } from "../utils/constants";
 
-
-/***** Project functions *****/
-export function getProject(contractAddress: Address): Project {
-  let project = Project.load(contractAddress.toHexString());
-  if (!project) {
-    let tokenContract = TokenContract.bind(contractAddress);
-    project = new Project(contractAddress.toHexString());
-    project.name = tokenContract.name();
-    project.symbol = tokenContract.symbol();
-    project.totalMinted = ZERO;
-    project.totalSales = ZERO;
-    project.totalTransfers = ZERO;
-    project.totalSalesWei = ZERO;
-    project.avgSaleWei = ZERO;
-    project.buyers = [];
-    project.sellers = [];
-    project.save();
-  }
-  return project as Project;
-}
-
-// appends a buyer to project.buyers array if it doesn't exist
-export function addBuyer(project: Project, buyer: Account): void {
-  let buyers = project.buyers;
-  if (!buyers.includes(buyer.id)) {
-    buyers.push(buyer.id);
-    project.buyers = buyers;
-  }
-  project.save();
-}
-
-// appends a seller to project.sellers array if it doesn't exist
-export function addSeller(project: Project, seller: Account): void {
-  let sellers = project.buyers;
-  if (!sellers.includes(seller.id)) {
-    sellers.push(seller.id);
-    project.sellers = sellers;
-  }
-  project.save();
-}
-
-
-/***** Account functions *****/
-export function getAccount(walletAddress: Address): Account {
-  let account = Account.load(walletAddress.toHexString());
-  if (!account) {
-    account = new Account(walletAddress.toHexString());
-    account.totalBought = ZERO;
-    account.totalBoughtWei = ZERO;
-    account.avgBoughtWei = ZERO;
-    account.totalSold = ZERO;
-    account.totalSoldWei = ZERO;
-    account.avgSoldWei = ZERO;
-    account.totalSent = ZERO;
-    account.totalReceived = ZERO;
-    account.save();
-  }
-  return account as Account;
-}
-
-
 /***** NFT functions *****/
-export function getBonsai(
+export function get(
   id: string,
   contractAddress: Address,
   tokenID: BigInt,
+  block: BigInt,
+  hash: Bytes,
   timestamp: BigInt,
   walletAddress: Address
 ): Bonsai {
@@ -77,10 +17,18 @@ export function getBonsai(
   if (!bonsai) {
     bonsai = new Bonsai(id);
     bonsai.project = contractAddress.toHexString();
+    bonsai.account = walletAddress.toHexString();
     bonsai.tokenID = tokenID;
+    bonsai.block = block;
+    bonsai.hash = hash;
     bonsai.timestamp = timestamp;
-    bonsai.tokenURI = IPFS_HASH + "/" + tokenID.toString();
+    
+    bonsai.totalSales = ZERO;
+    bonsai.totalSalesWei = ZERO;
+    bonsai.avgSaleWei = ZERO;
+    bonsai.totalTransfers = ZERO;
   
+    bonsai.tokenURI = IPFS_HASH + "/" + tokenID.toString();
     let metadata = ipfs.cat(bonsai.tokenURI);
     if (metadata) {
       const value = json.fromBytes(metadata).toObject();
@@ -145,7 +93,6 @@ export function getBonsai(
         }
       }
     }
-    bonsai.account = walletAddress.toHexString();
     bonsai.save();
   }
   return bonsai as Bonsai;

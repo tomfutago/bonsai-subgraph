@@ -1,8 +1,11 @@
 import { Transfer as TransferEvent } from "../generated/Token/Token";
-import { store } from '@graphprotocol/graph-ts';
-import { ONE, ZERO_ADDRESS } from "./utils/constants";
-import * as entities from "./entities/entities";
-import { Project } from "../generated/schema";
+import { Bonsai, Project } from "../generated/schema";
+import { ZERO_ADDRESS } from "./utils/constants";
+import * as projects from "./entities/projects";
+import * as accounts from "./entities/accounts";
+import * as nfts from "./entities/nfts";
+import * as saleEvents from "./entities/saleEvents";
+import * as transferEvents from "./entities/transferEvents";
 
 export function handleTransfer(event: TransferEvent): void {
   /***** get Event details *****/
@@ -10,48 +13,59 @@ export function handleTransfer(event: TransferEvent): void {
   let tokenId = event.params.tokenId;
   let from = event.params.from;
   let to = event.params.to;
+  let amount = event.transaction.value;
+  let block = event.block.number;
+  let hash = event.transaction.hash;
   let timestamp = event.block.timestamp;
 
-  /***** update Project *****/
-  let project = entities.getProject(address);
-  // mint
-  if (from.toHexString() == ZERO_ADDRESS) {
-    project.totalMinted = project.totalMinted.plus(ONE);
-  }
+  /***** Project *****/
+  let project = projects.get(address);
   // sale
   if (from.toHexString() != ZERO_ADDRESS) {
-    let seller = entities.getAccount(from);
-    let buyer = entities.getAccount(to);
-    project.totalSales = project.totalSales.plus(ONE);
-    entities.addSeller(project as Project, seller);
-    entities.addBuyer(project as Project, buyer);
+    let seller = accounts.get(from);
+    let buyer = accounts.get(to);
+    projects.addSeller(project as Project, seller);
+    projects.addBuyer(project as Project, buyer);
   }
-  // transfer
-  project.totalTransfers = project.totalTransfers.plus(ONE);
   project.save();
 
-  /***** update Account *****/
-  let account = entities.getAccount(to);
-  if (from.toHexString() != ZERO_ADDRESS) {
-    account.totalSold = account.totalSold.plus(ONE);
-  }
-  //account.totalTransfers = account.totalTransfers.plus(ONE);
-  account.save();
-
-  // check if previous account has any other bonsai, if not - remove account
-  //let prevAccount = Account.load(event.params.from.toHexString());
-  //if (!prevAccount) return;
-  //if (!prevAccount.bonsai) {
-  //  let id = prevAccount.id;
-  //  store.remove("Account", id);
-  //}
+  /***** Account *****/
+  let fromAccount = accounts.get(from);
+  let toAccount = accounts.get(to);
   
-  /***** update NFT *****/
-  let bonsai = entities.getBonsai(
+  /***** NFT *****/
+  let bonsai = nfts.get(
     tokenId.toString(),
     address,
     tokenId,
+    block,
+    hash,
     timestamp,
     to
+  );
+
+  /***** Sale Event *****/
+  if (from.toHexString() != ZERO_ADDRESS) {
+    saleEvents.create(
+      bonsai as Bonsai,
+      project as Project,
+      fromAccount,
+      toAccount,
+      amount,
+      block,
+      hash,
+      timestamp
+    );
+  }
+
+  /***** Transfer Event *****/
+  transferEvents.create(
+    bonsai as Bonsai,
+    project as Project,
+    fromAccount,
+    toAccount,
+    block,
+    hash,
+    timestamp
   );
 }
