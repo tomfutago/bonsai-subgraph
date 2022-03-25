@@ -39,8 +39,8 @@ type Account @entity {
   totalSent: BigInt!
   totalReceived: BigInt!
   nft: [Bonsai!] @derivedFrom(field: "account")
-  bought: [SaleEvent!]! @derivedFrom(field: "from")
-  sold: [SaleEvent!]! @derivedFrom(field: "to")
+  sold: [SaleEvent!]! @derivedFrom(field: "from")
+  bought: [SaleEvent!]! @derivedFrom(field: "to")
   sent: [TransferEvent!]! @derivedFrom(field: "from")
   received: [TransferEvent!]! @derivedFrom(field: "to")
 }
