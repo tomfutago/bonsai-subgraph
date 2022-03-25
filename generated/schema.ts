@@ -292,15 +292,6 @@ export class Account extends Entity {
     }
   }
 
-  get bought(): Array<string> {
-    let value = this.get("bought");
-    return value!.toStringArray();
-  }
-
-  set bought(value: Array<string>) {
-    this.set("bought", Value.fromStringArray(value));
-  }
-
   get sold(): Array<string> {
     let value = this.get("sold");
     return value!.toStringArray();
@@ -308,6 +299,15 @@ export class Account extends Entity {
 
   set sold(value: Array<string>) {
     this.set("sold", Value.fromStringArray(value));
+  }
+
+  get bought(): Array<string> {
+    let value = this.get("bought");
+    return value!.toStringArray();
+  }
+
+  set bought(value: Array<string>) {
+    this.set("bought", Value.fromStringArray(value));
   }
 
   get sent(): Array<string> {

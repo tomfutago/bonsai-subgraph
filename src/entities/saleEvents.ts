@@ -32,20 +32,20 @@ export function create(
   // increment the sales counts
   project.totalSales = project.totalSales.plus(ONE);
   nft.totalSales = nft.totalSales.plus(ONE);
-  from.totalBought = from.totalBought.plus(ONE);
-  to.totalSold = to.totalSold.plus(ONE);
+  from.totalSold = from.totalSold.plus(ONE);
+  to.totalBought = to.totalBought.plus(ONE);
 
   // increment the sales amounts
   project.totalSalesWei = project.totalSalesWei.plus(sale.amount);
   nft.totalSalesWei = nft.totalSalesWei.plus(sale.amount);
-  from.totalBoughtWei = from.totalBoughtWei.plus(sale.amount);
-  to.totalSoldWei = to.totalSoldWei.plus(sale.amount);
+  from.totalSoldWei = from.totalSoldWei.plus(sale.amount);
+  to.totalBoughtWei = to.totalBoughtWei.plus(sale.amount);
 
   // calculate average sale prices
   project.avgSaleWei = project.totalSalesWei.div(project.totalSales);
   nft.avgSaleWei = nft.totalSalesWei.div(nft.totalSales);
-  from.avgBoughtWei = from.totalBoughtWei.div(from.totalBought);
-  to.avgSoldWei = to.totalSoldWei.div(to.totalSold);
+  from.avgSoldWei = from.totalSoldWei.div(from.totalSold);
+  to.avgBoughtWei = to.totalBoughtWei.div(to.totalBought);
 
   // graph mutation
   project.save();
