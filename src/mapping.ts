@@ -1,6 +1,6 @@
 import { Transfer as TransferEvent } from "../generated/Token/Token";
 import { Bonsai, Project } from "../generated/schema";
-import { ZERO_ADDRESS } from "./utils/constants";
+import { ZERO, ZERO_ADDRESS } from "./utils/constants";
 import * as projects from "./entities/projects";
 import * as accounts from "./entities/accounts";
 import * as nfts from "./entities/nfts";
@@ -45,7 +45,7 @@ export function handleTransfer(event: TransferEvent): void {
   );
 
   /***** Sale Event *****/
-  if (from.toHexString() != ZERO_ADDRESS) {
+  if (from.toHexString() != ZERO_ADDRESS && amount.gt(ZERO)) {
     saleEvents.create(
       bonsai as Bonsai,
       project as Project,

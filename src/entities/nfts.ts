@@ -17,7 +17,6 @@ export function get(
   if (!bonsai) {
     bonsai = new Bonsai(id);
     bonsai.project = contractAddress.toHexString();
-    bonsai.account = walletAddress.toHexString();
     bonsai.tokenID = tokenID;
     bonsai.block = block;
     bonsai.hash = hash;
@@ -93,7 +92,9 @@ export function get(
         }
       }
     }
-    bonsai.save();
   }
+  bonsai.currentOwner = walletAddress.toHexString();
+  bonsai.save();
+
   return bonsai as Bonsai;
 }

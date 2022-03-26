@@ -1,6 +1,10 @@
 specVersion: 0.0.2
+description: Bonsai by ZENFT Subgraph
 schema:
   file: ./schema.graphql
+features:
+  - fullTextSearch
+  - ipfsOnEthereumContracts
 dataSources:
   - kind: ethereum
     name: Token

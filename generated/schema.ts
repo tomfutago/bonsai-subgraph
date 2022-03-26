@@ -335,7 +335,7 @@ export class Bonsai extends Entity {
     this.set("id", Value.fromString(id));
 
     this.set("project", Value.fromString(""));
-    this.set("account", Value.fromString(""));
+    this.set("currentOwner", Value.fromString(""));
     this.set("totalSales", Value.fromBigInt(BigInt.zero()));
     this.set("totalSalesWei", Value.fromBigInt(BigInt.zero()));
     this.set("avgSaleWei", Value.fromBigInt(BigInt.zero()));
@@ -385,13 +385,13 @@ export class Bonsai extends Entity {
     this.set("project", Value.fromString(value));
   }
 
-  get account(): string {
-    let value = this.get("account");
+  get currentOwner(): string {
+    let value = this.get("currentOwner");
     return value!.toString();
   }
 
-  set account(value: string) {
-    this.set("account", Value.fromString(value));
+  set currentOwner(value: string) {
+    this.set("currentOwner", Value.fromString(value));
   }
 
   get totalSales(): BigInt {

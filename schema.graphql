@@ -38,7 +38,7 @@ type Account @entity {
   avgSoldWei: BigInt!
   totalSent: BigInt!
   totalReceived: BigInt!
-  nft: [Bonsai!] @derivedFrom(field: "account")
+  nft: [Bonsai!] @derivedFrom(field: "currentOwner")
   sold: [SaleEvent!]! @derivedFrom(field: "from")
   bought: [SaleEvent!]! @derivedFrom(field: "to")
   sent: [TransferEvent!]! @derivedFrom(field: "from")
@@ -48,7 +48,7 @@ type Account @entity {
 type Bonsai @entity {
   id: ID!
   project: Project!
-  account: Account!
+  currentOwner: Account!
   totalSales: BigInt!
   totalSalesWei: BigInt!
   avgSaleWei: BigInt!
